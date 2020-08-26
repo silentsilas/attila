@@ -81,8 +81,9 @@
 
 
 			<section class="post-comments">
-				<a id="show-disqus" class="post-comments-activate">{{t "Show Comments"}}</a>
-			   <div id="disqus_thread"></div>
+				<a id="show-commento" class="post-comments-activate">{{t "Show Comments"}}</a>
+				<script defer src="https://commento.silentsilas.com/js/commento.js" data-auto-init="false"></script>
+				<div id="commento"></div>
 			</section>
 
       {{#if @labs.subscribers}}
@@ -175,20 +176,15 @@
 	    }
 	  });
 		// Check if disqus is defined by code injection
-		if (typeof disqus === 'undefined') {
+		if ($('#commento').length <= 0) {
 			// hide comment section
-	    $('.post-comments').css({
-	      'display': 'none'
-	    });
+			$('.post-comments').css({
+                'display': 'none'
+			});
 	  } else {
-	    $('#show-disqus').on('click', function() {
-	      $.ajax({
-	        type: "GET",
-	        url: "//" + disqus + ".disqus.com/embed.js",
-	        dataType: "script",
-	        cache: true
-	      });
-	      $(this).parent().addClass('activated');
+	    $('#show-commento').on('click', function() {
+            window.commento.main();
+            $(this).parent().addClass('activated');
 	    });
 	  }
   });
